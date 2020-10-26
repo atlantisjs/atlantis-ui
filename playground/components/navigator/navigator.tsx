@@ -1,60 +1,55 @@
-import {
-  defineComponent,
-  reactive,
-  provide,
-  inject,
-  onBeforeUnmount
-} from 'vue';
+import { defineComponent, ref, provide, inject, onBeforeUnmount } from 'vue';
 
-interface Route {
-  path?: string;
+export interface Route {
+  path: string;
   hash?: string;
   param?: { [k: string]: string };
 }
 
 const APP_NAVIGATOR_PROVIDER = '@@app-navigator';
 
-/**
- * hash路由
- * @author  韦胜健
- * @date    2020/10/22 11:05
- */
-function getRoute(): Route {
+function getRoute(defaultPath = ''): Route {
   let locationHash = window.location.hash || '';
 
   if (locationHash.charAt(0) === '#') {
     locationHash = locationHash.slice(1);
   }
 
-  const [path, hash] = decodeURIComponent(locationHash).split('#');
+  const location = decodeURIComponent(locationHash).split('#');
+
+  let [path] = location;
+  const [, hash] = location;
+
+  if (path.charAt(0) === '/') {
+    path = path.slice(1);
+  }
 
   return {
-    path,
+    path: path || defaultPath,
     hash
   };
 }
 
-function useAppNavigator(props: { defaultPath?: string }) {
-  const currentRoute = getRoute();
-  !currentRoute.path && (currentRoute.path = props.defaultPath);
+function useAppNavigator(defaultPath?: string) {
+  const currentRoute = getRoute(defaultPath);
+  const route = ref(currentRoute);
 
-  const state = reactive({
-    route: currentRoute
-  });
+  function go(route: string | Route) {
+    let path;
 
-  const go = (path: string) => {
+    if (typeof route === 'string') {
+      path = route;
+    } else {
+      path = route.path;
+    }
+
     window.location.hash = encodeURIComponent(path);
-  };
+  }
 
   const handler = {
     hashchange: () => {
-      state.route = getRoute();
+      route.value = getRoute();
     }
-  };
-
-  const refer = {
-    state,
-    go
   };
 
   window.addEventListener('hashchange', handler.hashchange);
@@ -62,12 +57,17 @@ function useAppNavigator(props: { defaultPath?: string }) {
     window.removeEventListener('hashchange', handler.hashchange)
   );
 
+  const refer = {
+    route,
+    go
+  };
+
   provide(APP_NAVIGATOR_PROVIDER, refer);
 
   return refer;
 }
 
-export function injectAppNavigator() {
+export function useNavigator() {
   return inject(APP_NAVIGATOR_PROVIDER) as ReturnType<typeof useAppNavigator>;
 }
 
@@ -77,7 +77,7 @@ export const Navigator = defineComponent({
     defaultPath: { type: String, default: '' }
   },
   setup(props, { slots }) {
-    useAppNavigator(props);
+    useAppNavigator(props.defaultPath);
 
     return () => (!!slots.default ? slots.default() : null);
   }

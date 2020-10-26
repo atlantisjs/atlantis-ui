@@ -6,7 +6,7 @@ import {
   markRaw,
   watch
 } from 'vue';
-import { injectAppNavigator } from './navigator';
+import { useNavigator } from './navigator';
 
 export const NavigatorPage = defineComponent({
   name: 'NavigatorPage',
@@ -15,17 +15,12 @@ export const NavigatorPage = defineComponent({
       PageComponent: null as null | DefineComponent
     });
 
-    const navigator = injectAppNavigator();
+    const { route } = useNavigator();
 
     const utils = {
       reset: async () => {
-        let { path } = navigator.state.route;
-        if (!path) {
-          return;
-        }
-        if (path.charAt(0) === '/') {
-          path = path.slice(1);
-        }
+        const { path } = route.value;
+        if (!path) return;
 
         const Component = defineAsyncComponent(() =>
           import('playground/views/' + path)
@@ -34,7 +29,7 @@ export const NavigatorPage = defineComponent({
       }
     };
 
-    watch(() => navigator.state.route.path, utils.reset, { immediate: true });
+    watch(() => route.value.path, utils.reset, { immediate: true });
 
     return () => {
       const { PageComponent } = state;

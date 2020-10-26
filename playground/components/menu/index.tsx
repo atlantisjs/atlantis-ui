@@ -1,24 +1,22 @@
 import { defineComponent } from 'vue';
-import { injectAppNavigator } from '../navigator/navigator';
-import { AppMenu, appMenus } from './menus';
+import { useNavigator } from '../navigator/navigator';
+import { appMenus } from './menus';
 
 export default defineComponent({
   name: 'AppMenu',
-  props: {
-    currentPath: { type: String, default: '' }
-  },
   setup() {
-    const navigator = injectAppNavigator();
-
-    const handleClickMenu = (menu: AppMenu) => {
-      navigator.go(menu.route);
-    };
+    const { route, go } = useNavigator();
 
     return () => (
       <div>
-        <ul>
+        <ul class="menu">
           {appMenus.map(item => (
-            <li onClick={() => handleClickMenu(item)}>{item.name}</li>
+            <li
+              class={route.value.path === item.route ? 'active' : ''}
+              onClick={() => go(item.route)}
+            >
+              {item.name}
+            </li>
           ))}
         </ul>
       </div>
