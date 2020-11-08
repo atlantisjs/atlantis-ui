@@ -1,0 +1,21 @@
+.ats-notification {
+  position: absolute;
+  display: inline-block;
+  padding: 10px 15px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+
+  &.top-left,
+  &.bottom-left {
+    left: 10px;
+  }
+  &.top-right,
+  &.bottom-right {
+    right: 10px;
+  }
+  &.top-center {
+    top: 10px;
+  }
+  &.bottom-center {
+    bottom: 10px;
+  }
+}

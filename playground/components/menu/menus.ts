@@ -11,5 +11,9 @@ export const appMenus: AppMenu[] = [
   {
     name: 'Layout',
     route: 'normal/layout'
+  },
+  {
+    name: 'Input',
+    route: 'normal/input'
   }
 ];

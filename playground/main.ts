@@ -1,4 +1,7 @@
 import { createApp } from 'vue';
 import App from './App.vue';
+import AtlantisUI from '../src';
 
-createApp(App).mount('#app');
+createApp(App)
+  .use(AtlantisUI)
+  .mount('#app');

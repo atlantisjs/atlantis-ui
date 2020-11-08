@@ -1,0 +1,22 @@
+.ats-button {
+  display: inline-block;
+  padding: 6px 12px;
+  background: none;
+  outline: none;
+  border: 1px solid $border-color-base;
+  border-radius: 5px;
+
+  &--block {
+    width: 100%;
+  }
+  &--text {
+    border: none;
+  }
+  &--round {
+    border-radius: 15px;
+  }
+  &--circle {
+    padding: 6px;
+    border-radius: 50%;
+  }
+}
