@@ -24,7 +24,7 @@
   ],
   "scripts": {
     "build": "rollup -c rollup.config.js",
-    "site:serve": "vue-cli-service serve",
+    "dev": "vue-cli-service serve",
     "site:build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },

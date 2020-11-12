@@ -7,6 +7,7 @@ import { Input } from './components/input';
 import { Notification, createNotification } from './components/notification';
 import { Modal } from './components/modal';
 import { Radio, RadioGroup, RadioGroupButton } from './components/radio';
+import { Step, Steps } from './components/step';
 import { Tooltip } from './components/tooltip';
 
 import './theme/index.scss';
@@ -23,6 +24,8 @@ export {
   Radio,
   RadioGroup,
   RadioGroupButton,
+  Step,
+  Steps,
   Tooltip,
   // methods
   createNotification,
@@ -41,6 +44,8 @@ export const install = (app: App) => {
   app.component(Radio.name, Radio);
   app.component(RadioGroup.name, RadioGroup);
   app.component(RadioGroupButton.name, RadioGroupButton);
+  app.component(Steps.name, Steps);
+  app.component(Step.name, Step);
   app.component(Tooltip.name, Tooltip);
 };
 
