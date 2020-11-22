@@ -1,3 +1,10 @@
+<template>
+  <div class="ats-checkbox-group" role="group" aria-label="checkbox-group">
+    <slot></slot>
+  </div>
+</template>
+
+<script lang="ts">
 import {
   computed,
   defineComponent,
@@ -7,9 +14,10 @@ import {
   provide,
   WritableComputedRef,
   toRefs,
-  Ref
+  Ref,
+  inject,
 } from 'vue';
-import { CheckboxValue } from './checkbox';
+import { CheckboxValue } from './checkbox.vue';
 
 interface CheckboxGroupCtx {
   model: WritableComputedRef<CheckboxValue>;
@@ -18,30 +26,26 @@ interface CheckboxGroupCtx {
   max?: Ref<number | undefined>;
 }
 
-export const checkboxGroupKey: InjectionKey<CheckboxGroupCtx> = Symbol.for(
-  'checkboxGroupKey'
-);
-
 export default defineComponent({
   name: 'AtsCheckboxGroup',
   props: {
     modelValue: {
       type: [Boolean, Array] as PropType<CheckboxValue>,
-      default: () => []
+      default: () => [],
     },
     disabled: { type: Boolean, default: false },
     min: { type: Number, default: 0 },
-    max: { type: Number }
+    max: { type: Number },
   },
   emits: ['update:modelValue', 'change'],
-  setup(props, { slots, emit }) {
+  setup(props, { emit }) {
     const model = computed<CheckboxValue>({
       get() {
         return props.modelValue;
       },
       set(val) {
         onChange(val);
-      }
+      },
     });
 
     function onChange(val: CheckboxValue) {
@@ -54,13 +58,21 @@ export default defineComponent({
     provide(checkboxGroupKey, {
       model,
       ...toRefs(props),
-      onChange
+      onChange,
     });
 
-    return () => (
-      <div class="ats-checkbox-group" role="group" aria-label="checkbox-group">
-        {slots.default && slots.default()}
-      </div>
-    );
-  }
+    return {
+      model,
+      onChange,
+    };
+  },
 });
+
+const checkboxGroupKey: InjectionKey<CheckboxGroupCtx> = Symbol.for(
+  'AtsCheckboxGroup'
+);
+
+export function useAtsCheckboxGroup() {
+  return inject(checkboxGroupKey);
+}
+</script>

@@ -1,9 +1,10 @@
+<script lang="tsx">
 import { defineComponent, Teleport } from 'vue';
 
 export default defineComponent({
   name: 'AtsModal',
   props: {
-    appendToBody: { type: Boolean, default: false }
+    appendToBody: { type: Boolean, default: false },
   },
   setup(props, { slots }) {
     const renderModal = () => (
@@ -19,5 +20,6 @@ export default defineComponent({
         )}
       </>
     );
-  }
+  },
 });
+</script>

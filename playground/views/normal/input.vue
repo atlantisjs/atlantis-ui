@@ -1,14 +1,14 @@
 <template>
   <div>
-    <ats-form>
-      <ats-input ref="inputRef" v-model="text" minlength="123">
-        <template #prefix>prefix</template>
-      </ats-input>
+    <ats-form ref="formRef">
+      <ats-form-item label="百度" name="name">
+        <ats-input ref="inputRef" v-model="text" minlength="123"> </ats-input>
+      </ats-form-item>
     </ats-form>
 
     <div>{{ text }}</div>
 
-    <ats-button @click="toggle">toggle</ats-button>
+    <ats-button @click="onClick">toggle</ats-button>
 
     <ats-alert v-model="visible" type="success" :description="text">
       哈哈哈啊哈
@@ -20,8 +20,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watchEffect } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { useToggle } from '@/composables';
+import { Form } from '@/index';
 
 export default defineComponent({
   name: 'InputPage',
@@ -30,21 +31,21 @@ export default defineComponent({
     const { state: visible, toggle } = useToggle();
 
     const inputRef = ref<null | HTMLInputElement>(null);
+    const formRef = ref<typeof Form | null>(null);
 
-    watchEffect(
-      () => {
-        console.log(inputRef.value);
-        inputRef.value?.focus();
-      },
-      { flush: 'post' }
-    );
+    const onClick = () => {
+      formRef.value?.validates();
+    };
 
     return {
       text,
       inputRef,
       visible,
-      toggle
+      toggle,
+
+      formRef,
+      onClick,
     };
-  }
+  },
 });
 </script>

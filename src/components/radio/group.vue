@@ -1,12 +1,20 @@
+<template>
+  <div class="ats-radio-group">
+    <slot></slot>
+  </div>
+</template>
+
+<script lang="ts">
 import {
   defineComponent,
   Ref,
   InjectionKey,
   provide,
   nextTick,
-  toRefs
+  toRefs,
+  inject,
 } from 'vue';
-import { RadioValue } from './radio';
+import { RadioValue } from './radio.vue';
 
 interface RadioGroupCtx {
   modelValue: Ref<RadioValue>;
@@ -14,18 +22,14 @@ interface RadioGroupCtx {
   onChange: (value: RadioValue) => void;
 }
 
-export const radioGroupKey: InjectionKey<RadioGroupCtx> = Symbol.for(
-  'AtsRadioGroupKey'
-);
-
 export default defineComponent({
   name: 'AtsRadioGroup',
   props: {
     modelValue: { type: [Boolean, String, Number], required: true },
-    disabled: { type: Boolean, default: false }
+    disabled: { type: Boolean, default: false },
   },
   emits: ['update:modelValue', 'change'],
-  setup(props, { slots, emit }) {
+  setup(props, { emit }) {
     const onChange = (value: RadioValue) => {
       emit('update:modelValue', value);
       nextTick(() => {
@@ -35,11 +39,20 @@ export default defineComponent({
 
     provide(radioGroupKey, {
       ...toRefs(props),
-      onChange
+      onChange,
     });
 
-    return () => (
-      <div class="ats-radio-group">{slots.default && slots.default()}</div>
-    );
-  }
+    return {
+      onChange,
+    };
+  },
 });
+
+const radioGroupKey: InjectionKey<RadioGroupCtx> = Symbol.for(
+  'AtsRadioGroupKey'
+);
+
+export function useAtsRadioGroupKey() {
+  return inject(radioGroupKey);
+}
+</script>

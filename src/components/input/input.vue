@@ -1,8 +1,42 @@
-import { defineComponent, ref, inject } from 'vue';
+<template>
+  <div
+    :class="[
+      'ats-input',
+      {
+        'ats-input--disabled': disabled,
+        'ats-input--prefix': $slots.prefix,
+        'ats-input--suffix': $slots.suffix,
+      },
+    ]"
+  >
+    <div v-if="$slots.prefix" class="ats-input--prefix">
+      <slot name="prefix"></slot>
+    </div>
+
+    <input
+      ref="inputRef"
+      class="ats-input--inner"
+      :type="type"
+      :disabled="disabled"
+      @input="handleInput"
+      @change="handleChange"
+      @blur="handleBlur"
+      @focus="handleFocus"
+      @compositionstart="handleCompositionStart"
+      @compositionupdate="handleCompositionUpdate"
+      @compositionend="handleCompositionEnd"
+    />
+
+    <div v-if="$slots.suffix" class="ats-input--suffix">
+      <slot name="suffix"></slot>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
 import { isKorean } from '@/utils';
-import { useExpose } from '@/composables';
-import { formKey } from '@/components/form/form';
-import { computed } from '@vue/reactivity';
+// import { useAtsForm } from '../form/form.vue';
 
 export default defineComponent({
   name: 'AtsInput',
@@ -10,15 +44,11 @@ export default defineComponent({
     modelValue: { type: [String, Number], default: '' },
     type: { type: String, default: 'text' },
     disabled: { type: Boolean, default: false },
-    clearable: { type: Boolean, default: false }
+    clearable: { type: Boolean, default: false },
   },
   emits: ['update:modelValue', 'input', 'change', 'focus', 'blur', 'clear'],
-  setup(props, { slots, attrs, emit }) {
+  setup(props, { emit }) {
     const inputRef = ref<HTMLInputElement | null>(null);
-
-    const atsForm = inject(formKey);
-
-    atsForm?.validate('12313');
 
     const handleInput = (evt: Event) => {
       const target = evt.target as HTMLInputElement;
@@ -66,39 +96,20 @@ export default defineComponent({
       inputRef.value?.blur();
     };
 
-    useExpose({
+    return {
+      inputRef,
+
+      handleChange,
+      handleInput,
+      handleFocus,
+      handleBlur,
+      handleCompositionStart,
+      handleCompositionUpdate,
+      handleCompositionEnd,
+
       focus: onFocus,
-      blur: onBlur
-    });
-
-    const classes = computed(() => [
-      'ats-input',
-      {
-        'ats-input--disabled': props.disabled,
-        'ats-input--prefix': slots.prefix,
-        'ats-input--suffix': slots.suffix
-      }
-    ]);
-
-    return () => (
-      <div class={classes.value}>
-        {slots.prefix && <div class="ats-input--prefix">{slots.prefix()}</div>}
-        <input
-          class="ats-input--inner"
-          type={props.type}
-          ref={inputRef}
-          disabled={props.disabled}
-          onInput={e => handleInput(e)}
-          onChange={e => handleChange(e)}
-          onBlur={e => handleBlur(e)}
-          onFocus={e => handleFocus(e)}
-          onCompositionstart={() => handleCompositionStart()}
-          onCompositionupdate={e => handleCompositionUpdate(e)}
-          onCompositionend={e => handleCompositionEnd(e)}
-          {...attrs}
-        />
-        {slots.suffix && <div class="ats-input--suffix">{slots.suffix()}</div>}
-      </div>
-    );
-  }
+      blur: onBlur,
+    };
+  },
 });
+</script>
