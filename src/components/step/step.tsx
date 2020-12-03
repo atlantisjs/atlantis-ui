@@ -5,7 +5,7 @@ import {
   inject,
   onBeforeUnmount,
   reactive,
-  ref
+  ref,
 } from 'vue';
 import { stepsKey } from './steps';
 
@@ -21,7 +21,7 @@ export default defineComponent({
   name: 'AtsStep',
   props: {
     title: { type: String, default: '' },
-    description: { type: String, default: '' }
+    description: { type: String, default: '' },
   },
   setup(props) {
     const steps = inject(stepsKey);
@@ -38,7 +38,7 @@ export default defineComponent({
       const stepItemState = reactive({
         uid: computed(() => currentInstance.uid),
         currentStatus,
-        setIndex
+        setIndex,
       });
 
       steps.steps.value = [...steps.steps.value, stepItemState];
@@ -56,8 +56,8 @@ export default defineComponent({
       const classes = computed(() => [
         'ats-step',
         {
-          'ats-step--active': stepIndex.value === steps?.current.value
-        }
+          'ats-step--active': stepIndex.value === steps?.current.value,
+        },
       ]);
 
       return (
@@ -67,5 +67,5 @@ export default defineComponent({
         </div>
       );
     };
-  }
+  },
 });

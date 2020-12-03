@@ -11,7 +11,7 @@ export default defineComponent({
     duration: { type: Number, default: 3000 },
     pauseOnHover: { type: Boolean, default: true },
     offset: { type: Number, default: 0 },
-    onClose: { type: Function, default: () => {} }
+    onClose: { type: Function, default: () => {} },
   },
   setup(props, { slots }) {
     let timer: number | null;
@@ -23,7 +23,7 @@ export default defineComponent({
         : 'bottom';
 
       return {
-        [verticalProperty]: `${props.offset}px`
+        [verticalProperty]: `${props.offset}px`,
       };
     });
 
@@ -58,7 +58,7 @@ export default defineComponent({
     const classes = computed(() => [
       'ats-notification',
       `${props.position}`,
-      props.customClass
+      props.customClass,
     ]);
 
     return () => (
@@ -90,5 +90,5 @@ export default defineComponent({
         </div>
       </Transition>
     );
-  }
+  },
 });

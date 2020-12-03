@@ -26,7 +26,7 @@ function getRoute(defaultPath = ''): Route {
 
   return {
     path: path || defaultPath,
-    hash
+    hash,
   };
 }
 
@@ -49,7 +49,7 @@ function useAppNavigator(defaultPath?: string) {
   const handler = {
     hashchange: () => {
       route.value = getRoute();
-    }
+    },
   };
 
   window.addEventListener('hashchange', handler.hashchange);
@@ -59,7 +59,7 @@ function useAppNavigator(defaultPath?: string) {
 
   const refer = {
     route,
-    go
+    go,
   };
 
   provide(APP_NAVIGATOR_PROVIDER, refer);
@@ -74,11 +74,11 @@ export function useNavigator() {
 export const Navigator = defineComponent({
   name: 'Navigator',
   props: {
-    defaultPath: { type: String, default: '' }
+    defaultPath: { type: String, default: '' },
   },
   setup(props, { slots }) {
     useAppNavigator(props.defaultPath);
 
     return () => (!!slots.default ? slots.default() : null);
-  }
+  },
 });

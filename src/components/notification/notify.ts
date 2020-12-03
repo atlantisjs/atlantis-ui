@@ -49,7 +49,7 @@ export function createNotification() {
       customClass,
       position,
       pauseOnHover,
-      onClose: userOnClose
+      onClose: userOnClose,
     } = options;
 
     const container = document.createElement('div');
@@ -69,11 +69,11 @@ export function createNotification() {
         customClass,
         position,
         pauseOnHover,
-        onClose: destroy
+        onClose: destroy,
       },
       message
         ? {
-            default: () => message
+            default: () => message,
           }
         : null
     );
@@ -83,14 +83,14 @@ export function createNotification() {
       cid,
       vm: vnode,
       $el: container,
-      destroy
+      destroy,
     };
 
     notifications.push(notification);
     document.body.appendChild(container);
 
     return {
-      destroy
+      destroy,
     };
   }
 
@@ -102,7 +102,7 @@ export function createNotification() {
 
   return {
     open,
-    clearAll
+    clearAll,
   };
 }
 

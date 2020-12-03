@@ -6,14 +6,14 @@ export interface AppMenu {
 export const appMenus: AppMenu[] = [
   {
     name: '按钮',
-    route: 'normal/button'
+    route: 'normal/button',
   },
   {
     name: 'Layout',
-    route: 'normal/layout'
+    route: 'normal/layout',
   },
   {
     name: 'Input',
-    route: 'normal/input'
-  }
+    route: 'normal/input',
+  },
 ];

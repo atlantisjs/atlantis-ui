@@ -7,6 +7,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 // import { createPopper } from '@popperjs/core';
+// import type { VNode} from 'vue'
 
 export default defineComponent({
   name: 'AtsTooltip',

@@ -4,6 +4,7 @@ import { defineComponent, Teleport } from 'vue';
 export default defineComponent({
   name: 'AtsModal',
   props: {
+    visible: { type: Boolean, default: false },
     appendToBody: { type: Boolean, default: false },
   },
   setup(props, { slots }) {
@@ -13,10 +14,10 @@ export default defineComponent({
 
     return () => (
       <>
-        {props.appendToBody ? (
-          <Teleport to="body">{renderModal()}</Teleport>
-        ) : (
-          renderModal()
+        {props.visible && (
+          <Teleport to="body" disabled={!props.appendToBody}>
+            {renderModal()}
+          </Teleport>
         )}
       </>
     );

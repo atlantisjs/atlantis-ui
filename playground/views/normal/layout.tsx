@@ -1,23 +1,16 @@
+import { useToggle } from '@/composables';
 import { defineComponent } from 'vue';
-import { Notification } from '../../../src';
 
 export default defineComponent({
   name: 'LayoutPage',
   setup() {
+    const { state, toggle } = useToggle(false);
+
     return () => (
-      <div>
-        <ats-button
-          onClick={() =>
-            Notification.open({
-              title: 'Notification',
-              message: 'message',
-              pauseOnHover: false
-            })
-          }
-        >
-          open
-        </ats-button>
-      </div>
+      <>
+        <ats-button onClick={() => toggle()}>button</ats-button>
+        <ats-backdrop visible={state.value}>123123123</ats-backdrop>
+      </>
     );
-  }
+  },
 });

@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import { oneOf } from '@/utils';
 
 type AlertType = 'success' | 'info' | 'warning' | 'error';

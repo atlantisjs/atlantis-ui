@@ -18,8 +18,8 @@ export default defineComponent({
   components: {
     Navigator,
     NavigatorPage,
-    AppMenu
-  }
+    AppMenu,
+  },
 });
 </script>
 

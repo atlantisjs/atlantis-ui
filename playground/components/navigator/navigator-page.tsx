@@ -4,7 +4,7 @@ import {
   reactive,
   DefineComponent,
   markRaw,
-  watch
+  watch,
 } from 'vue';
 import { useNavigator } from './navigator';
 
@@ -12,7 +12,7 @@ export const NavigatorPage = defineComponent({
   name: 'NavigatorPage',
   setup() {
     const state = reactive({
-      PageComponent: null as null | DefineComponent
+      PageComponent: null as null | DefineComponent,
     });
 
     const { route } = useNavigator();
@@ -26,7 +26,7 @@ export const NavigatorPage = defineComponent({
           import('playground/views/' + path)
         );
         state.PageComponent = markRaw(Component);
-      }
+      },
     };
 
     watch(() => route.value.path, utils.reset, { immediate: true });
@@ -40,5 +40,5 @@ export const NavigatorPage = defineComponent({
         </div>
       );
     };
-  }
+  },
 });

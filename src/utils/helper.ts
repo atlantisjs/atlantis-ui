@@ -15,7 +15,7 @@ export const keyCodes = Object.freeze({
   backspace: 8,
   insert: 45,
   pageup: 33,
-  pagedown: 34
+  pagedown: 34,
 });
 
 // 判断参数是否是其中之一

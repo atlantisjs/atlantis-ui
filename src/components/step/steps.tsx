@@ -6,7 +6,7 @@ import {
   PropType,
   Ref,
   watch,
-  ref
+  ref,
 } from 'vue';
 import Step, { StepStatus, StepItemState } from './step';
 
@@ -28,7 +28,7 @@ export default defineComponent({
   props: {
     options: { type: Array as PropType<StepOptions[]>, default: () => [] },
     current: { type: Number, default: 0 },
-    status: { type: String as PropType<StepStatus>, default: 'process' }
+    status: { type: String as PropType<StepStatus>, default: 'process' },
   },
   emits: ['change'],
   setup(props, { slots, emit }) {
@@ -42,7 +42,7 @@ export default defineComponent({
     provide(stepsKey, {
       steps,
       current,
-      status
+      status,
     });
 
     watch(steps, steps => {
@@ -60,5 +60,5 @@ export default defineComponent({
             ))}
       </div>
     );
-  }
+  },
 });
