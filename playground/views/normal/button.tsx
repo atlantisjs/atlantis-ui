@@ -30,7 +30,9 @@ export default defineComponent({
           <ats-step title="2222"></ats-step>
         </ats-steps>
 
-        <ats-modal visible={visible.value}>anbc</ats-modal>
+        <ats-modal v-model={visible.value}>anbc</ats-modal>
+
+        <ats-color-panel></ats-color-panel>
       </div>
     );
   },

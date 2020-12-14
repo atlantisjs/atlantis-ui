@@ -3,6 +3,7 @@ import { Alert } from './components/alert';
 import { Backdrop } from './components/backdrop';
 import { Button } from './components/button';
 import { Checkbox, CheckboxGroup } from './components/checkbox';
+import { ColorPicker, ColorPanel } from './components/color';
 import { Drawer } from './components/drawer';
 import { Form, FormItem } from './components/form';
 import { Input } from './components/input';
@@ -21,6 +22,8 @@ export {
   Button,
   Checkbox,
   CheckboxGroup,
+  ColorPicker,
+  ColorPanel,
   Drawer,
   Form,
   FormItem,
@@ -44,6 +47,8 @@ export const install = (app: App) => {
   app.component(Button.name, Button);
   app.component(Checkbox.name, Checkbox);
   app.component(CheckboxGroup.name, CheckboxGroup);
+  app.component(ColorPicker.name, ColorPicker);
+  app.component(ColorPanel.name, ColorPanel);
   app.component(Drawer.name, Drawer);
   app.component(Form.name, Form);
   app.component(FormItem.name, FormItem);

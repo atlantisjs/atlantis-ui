@@ -1,20 +1,43 @@
 <script lang="tsx">
-import { defineComponent, Teleport } from 'vue';
+import { defineComponent, nextTick, Teleport, watch } from 'vue';
+import { useToggle } from '@/composables';
 
 export default defineComponent({
   name: 'AtsModal',
   props: {
-    visible: { type: Boolean, default: false },
+    modelValue: { type: Boolean, default: false },
     appendToBody: { type: Boolean, default: false },
   },
-  setup(props, { slots }) {
+  emits: ['update:modelValue', 'close'],
+  setup(props, { slots, emit }) {
+    const { state: visible, toggle: toggleVisible } = useToggle();
+
+    watch(
+      () => props.modelValue,
+      value => {
+        toggleVisible(value);
+      },
+      { immediate: true }
+    );
+
+    const onClose = () => {
+      toggleVisible();
+
+      nextTick(() => {
+        emit('update:modelValue', visible.value);
+      });
+    };
+
     const renderModal = () => (
-      <div class="at-modal">{slots.default && slots.default()}</div>
+      <div class="ats-modal">
+        <div onClick={() => onClose()}>close</div>
+        <div class="ats-modal__content">{slots.default && slots.default()}</div>
+      </div>
     );
 
     return () => (
       <>
-        {props.visible && (
+        {visible.value && (
           <Teleport to="body" disabled={!props.appendToBody}>
             {renderModal()}
           </Teleport>

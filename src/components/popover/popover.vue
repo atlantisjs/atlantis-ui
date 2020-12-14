@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import type { Trigger, Placement } from './types';
 
 export const DEFAULT_TRIGGER: Trigger = 'hover';
