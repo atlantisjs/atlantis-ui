@@ -1,4 +1,6 @@
-// KeyboardEvent.keyCode aliases
+/**
+ * KeyboardEvent.keyCode aliases
+ */
 export const keyCodes = Object.freeze({
   enter: 13,
   tab: 9,
@@ -18,7 +20,20 @@ export const keyCodes = Object.freeze({
   pagedown: 34,
 });
 
-// 判断参数是否是其中之一
+/**
+ * 判断是否是韩文
+ * @param text 文字参数
+ */
+export function isKorean(text: string): boolean {
+  const reg = /([(\uAC00-\uD7AF)|(\u3130-\u318F)])+/gi;
+  return reg.test(text);
+}
+
+/**
+ * 判断参数是否是其中之一
+ * @param value 被判断的参数
+ * @param validList 被判断的数组
+ */
 export const oneOf = <T = unknown>(value: T, validList: T[]) => {
   return validList.some(item => item === value);
 };
