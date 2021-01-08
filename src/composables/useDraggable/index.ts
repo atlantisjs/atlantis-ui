@@ -59,7 +59,7 @@ export function useDraggable(
 
   // 给 draggableElRef的 dom 添加mousedown事件
   watchEffect(
-    () => {
+    onInvalidate => {
       const element = draggableElRef.value;
 
       if (!element) return;
@@ -114,16 +114,16 @@ export function useDraggable(
           }
         }
 
-        return () => {
+        onInvalidate(() => {
           element?.removeEventListener('mousedown', startDragging);
-        };
+        });
       }
     },
     { flush: 'post' }
   );
 
   watchEffect(
-    () => {
+    onInvalidate => {
       if (isDragging.value) {
         document.addEventListener('mousemove', draging, { passive: true });
         document.addEventListener('mouseup', stopDragging);
@@ -153,10 +153,10 @@ export function useDraggable(
         document.removeEventListener('mouseup', stopDragging);
       }
 
-      return () => {
+      onInvalidate(() => {
         document.removeEventListener('mousemove', draging);
         document.removeEventListener('mouseup', stopDragging);
-      };
+      });
     },
     { flush: 'post' }
   );

@@ -1,4 +1,5 @@
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, watch } from 'vue';
+import { useResizeObserver } from '@/composables';
 
 export default defineComponent({
   name: 'ButtonPage',
@@ -6,6 +7,20 @@ export default defineComponent({
     const checked = ref([]);
     const current = ref(0);
     const visible = ref(false);
+
+    const { resizeObserverEntry } = useResizeObserver(document.body, {
+      wait: 300,
+    });
+
+    watch(
+      resizeObserverEntry,
+      val => {
+        console.log(val);
+      },
+      {
+        flush: 'post',
+      }
+    );
 
     return () => (
       <div>

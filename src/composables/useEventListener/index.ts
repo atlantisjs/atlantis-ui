@@ -1,11 +1,10 @@
-import { onBeforeUnmount, watchEffect, Ref, isRef } from 'vue';
-
-export type EventTarget = HTMLElement | Document | Ref<HTMLElement | Document>;
+import { watchEffect, Ref, ref, isRef } from 'vue';
+import { ElementType, isComponentPublicInstance } from '@/utils';
 
 export type EventName = keyof HTMLElementEventMap;
 
 export function useEventListener(
-  target: EventTarget,
+  target: Ref<ElementType | undefined> | ElementType | undefined,
   option: {
     type: EventName;
     listener: EventListenerOrEventListenerObject;
@@ -14,42 +13,34 @@ export function useEventListener(
 ) {
   const { type, listener, options } = option;
 
-  if (isRef(target)) {
-    let prevEle: HTMLElement | Document;
+  const targetElRef = ref<Element>();
 
-    const destroyWatcher = watchEffect(
-      () => {
-        target.value?.addEventListener(type, listener, options);
-        if (prevEle) {
-          prevEle.removeEventListener(type, listener);
+  watchEffect(
+    () => {
+      if (isRef(target)) {
+        if (target.value) {
+          targetElRef.value = isComponentPublicInstance(target.value)
+            ? target.value.$el
+            : target;
         }
-        prevEle = target?.value;
-      },
-      { flush: 'post' }
-    );
-
-    const removeListener = (isDestroyWatcher = true) => {
-      target.value.removeEventListener(type, listener);
-      if (isDestroyWatcher) {
-        destroyWatcher();
+      } else {
+        if (target)
+          targetElRef.value = isComponentPublicInstance(target)
+            ? target.$el
+            : target;
       }
-    };
-    onBeforeUnmount(() => {
-      removeListener(true);
-    });
+    },
+    { flush: 'post' }
+  );
 
-    return removeListener;
-  } else {
-    target.addEventListener(type, listener, options);
+  watchEffect(
+    onInvalidate => {
+      targetElRef.value?.addEventListener(type, listener, options);
 
-    const removeListener = () => {
-      target.removeEventListener(type, listener);
-    };
-
-    onBeforeUnmount(() => {
-      removeListener();
-    });
-
-    return removeListener;
-  }
+      onInvalidate(() => {
+        targetElRef.value?.removeEventListener(type, listener);
+      });
+    },
+    { flush: 'post' }
+  );
 }
