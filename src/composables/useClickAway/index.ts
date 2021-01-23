@@ -1,5 +1,6 @@
 import { Ref } from 'vue';
 import { useEventListener, EventName } from '../useEventListener';
+import { ElementType } from '@/utils';
 
 const defaultEvent: EventName = 'click';
 
@@ -7,7 +8,7 @@ export function useClickAway(
   el: Ref<HTMLElement>,
   onClickAway: (event: Event) => void,
   eventName: EventName = defaultEvent,
-  container: Document | HTMLElement | Ref<HTMLElement> = document
+  container: ElementType = document.documentElement
 ) {
   function onClickAwayFn(e: Event) {
     const dom = el.value;
@@ -18,10 +19,8 @@ export function useClickAway(
     onClickAway(e);
   }
 
-  const removeListener: (...args: any) => any = useEventListener(container, {
+  useEventListener(container, {
     type: eventName,
-    listener: onClickAwayFn
+    listener: onClickAwayFn,
   });
-
-  return removeListener;
 }

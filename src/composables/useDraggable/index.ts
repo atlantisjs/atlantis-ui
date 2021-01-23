@@ -19,10 +19,12 @@ interface UseDraggableOptions {
   coordsLimits?: CoordsLimits;
 }
 
-export function useDraggable(
-  options: UseDraggableOptions = { controlStyle: true, viewport: true }
-) {
-  const { controlStyle, viewport, coordsLimits } = options;
+export function useDraggable({
+  controlStyle = true,
+  viewport = true,
+  ...options
+}: UseDraggableOptions = {}) {
+  const { coordsLimits } = options;
   const draggableRef = ref<ElementType>();
   const targetRef = ref<ElementType>();
 
@@ -76,7 +78,7 @@ export function useDraggable(
           left: eleLeft,
           width: eleWidth,
           height: eleHeight,
-        } = (element as HTMLElement).getBoundingClientRect();
+        } = (element as Element).getBoundingClientRect();
         const { clientX, clientY } = event;
 
         initialCoords.x = clientX - eleTop;
