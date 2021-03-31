@@ -10,26 +10,19 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "baseUrl": ".",
-    "types": [
-      "webpack-env"
-    ],
-    "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "playground/*": [
-        "playground/*"
-      ],
-    },
     "lib": [
       "esnext",
       "dom",
-      "dom.iterable",
-      "scripthost"
-    ]
+      "dom.iterable"
+    ],
+    "rootDir": ".",
+    "paths": {
+      "@atlantis/*": ["packages/*/src"]
+    }
   },
-  "exclude": [
-    "node_modules"
+  "include": [
+    "packages/*/src",
+    "packages/*/__tests__",
+    "playground"
   ]
 }
