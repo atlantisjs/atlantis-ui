@@ -1,5 +1,5 @@
 import { ref, watchEffect, watch } from 'vue';
-import { ElementType, isComponentPublicInstance } from 'packages/utils';
+import { ElementType, isComponentPublicInstance } from '@atlantis/utils';
 
 interface Coords {
   x: number;

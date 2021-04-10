@@ -10,19 +10,11 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable"
-    ],
-    "rootDir": ".",
+    "lib": ["esnext", "dom", "dom.iterable"],
+    "baseUrl": ".",
     "paths": {
       "@atlantis/*": ["packages/*/src"]
     }
   },
-  "include": [
-    "packages/*/src",
-    "packages/*/__tests__",
-    "playground"
-  ]
+  "include": ["packages/*/src", "packages/*/__tests__", "playground"]
 }

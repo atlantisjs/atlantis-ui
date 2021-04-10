@@ -1,6 +1,6 @@
 import { Ref } from 'vue';
-import { useEventListener, EventName } from '../../useEventListener';
-import { ElementType } from 'packages/utils';
+import { useEventListener, EventName } from '../useEventListener';
+import { ElementType } from '@atlantis/utils';
 
 const defaultEvent: EventName = 'click';
 

@@ -1,6 +1,6 @@
 import ResizeObserver from 'resize-observer-polyfill';
 import { watchEffect, Ref, ref, isRef, onBeforeUnmount } from 'vue';
-import { ElementType, isComponentPublicInstance } from 'packages/utils';
+import { ElementType, isComponentPublicInstance } from '@atlantis/utils';
 import throttle from 'lodash.throttle';
 
 interface UseResizeOptions {

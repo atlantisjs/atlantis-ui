@@ -1,5 +1,5 @@
 import { watchEffect, Ref, ref, isRef } from 'vue';
-import { ElementType, isComponentPublicInstance } from 'packages/utils';
+import { ElementType, isComponentPublicInstance } from '@atlantis/utils';
 
 export type EventName = keyof HTMLElementEventMap;
 

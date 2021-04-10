@@ -2,15 +2,24 @@
   "name": "@atlantis/composables",
   "version": "1.0.0",
   "description": "vue composables",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "main": "dist/composables.cjs.js",
+  "module": "dist/composables.esm.js",
+  "buildOptions": {
+    "name": "AtlantisComposables",
+    "formats": [
+      "cjs",
+      "esm"
+    ]
   },
   "keywords": [
     "vue",
     "composition",
     "api"
   ],
+  "dependencies": {
+    "lodash.throttle": "^4.1.1",
+    "resize-observer-polyfill": "^1.5.1"
+  },
   "peerDependencies": {
     "vue": "^3.0.10"
   },

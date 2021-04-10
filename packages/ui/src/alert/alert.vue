@@ -28,7 +28,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { oneOf } from '@/utils';
+import { oneOf } from '@atlantis/utils';
 
 type AlertType = 'success' | 'info' | 'warning' | 'error';
 

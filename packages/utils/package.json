@@ -2,10 +2,15 @@
   "name": "@atlantis/utils",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "main": "dist/utils.cjs.js",
+  "module": "dist/utils.esm.js",
+  "author": "1ncounter",
+  "buildOptions": {
+    "name": "AtlantisUtils",
+    "formats": [
+      "cjs",
+      "esm"
+    ]
   },
-  "author": "",
   "license": "MIT"
 }

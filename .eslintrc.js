@@ -18,9 +18,6 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
 
     'vue/require-default-prop': 'off',
-
-    '@typescript-eslint/no-empty-function': 'off',
-    '@typescript-eslint/no-use-before-define': 'off',
   },
   overrides: [
     {
@@ -34,6 +31,10 @@ module.exports = {
       rules: {
         'no-unused-vars': 'off',
         '@typescript-eslint/no-unused-vars': ['error'],
+
+        '@typescript-eslint/no-empty-function': 'off',
+        '@typescript-eslint/no-use-before-define': 'off',
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
       },
     },
   ],
